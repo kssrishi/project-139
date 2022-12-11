@@ -1,5 +1,7 @@
 /*created by prashant shukla */
-
+rightWristY = "";
+rightWristX = "";
+scoreRightWrist=""
 var paddle2 = 10,
   paddle1 = 10;
 
@@ -36,8 +38,17 @@ function setup() {
 function modelloaded() {
   console.log("modelloaded successfully");
 }
-function gotposes(results) {}
+function gotposes(results) {
+  if (results.length > 0) {
+    console.log(results);
+    rightWristX = results[0].pose.rightWrist.x
+    rightWristY = results[0].pose.rightWrist.y
+    scoreRightWrist = results[0].pose.keypoints[10].score;
+    console.log(scoreRightWrist);
+  }
+}
 function draw() {
+  
   background(0);
   image(video, 0, 0, 700, 600);
   fill("black");
@@ -47,7 +58,11 @@ function draw() {
   fill("black");
   stroke("black");
   rect(0, 0, 20, 700);
-
+if (scoreRightWrist > 0.2) {
+  fill("red");
+  stroke("blue");
+  circle(rightWristX, rightWristY, 20);
+}
   //funtion paddleInCanvas call
   paddleInCanvas();
 
